@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class GameManagerBehavior : MonoBehaviour {
-    public GameObject buildLocation;
+    public GameObject prefab;
     public Text healthLabel;
     public GameObject[] healthIndicator;
     public Text waveLabel;
@@ -87,25 +87,34 @@ public class GameManagerBehavior : MonoBehaviour {
         //            Instantiate(buildLocation, transform.TransformPoint(k-width/2,i-height/2,0), Quaternion.identity);
         //    }
         //}
-        RectTransform objectRectTransform = gameObject.GetComponent<RectTransform>();                // This section gets the RectTransform information from this object. Height and width are stored in variables. The borders of the object are also defined
-        float width = objectRectTransform.rect.width;
-        float height = objectRectTransform.rect.height;
-        float rightOuterBorder = (width * .5f);
-        float leftOuterBorder = (width * -.5f);
-        float topOuterBorder = (height * .5f);
-        float bottomOuterBorder = (height * -.5f);
-        if (Input.mousePosition.x <= (transform.position.x + rightOuterBorder) && Input.mousePosition.x >= (transform.position.x + leftOuterBorder) && Input.mousePosition.y <= (transform.position.y + topOuterBorder) && Input.mousePosition.y >= (transform.position.y + bottomOuterBorder))
-        {
-            //PerformRaycast();                                // Calls the function to perform a raycast
-            if(lastPointer != null)
-                lastPointer.
-            lastPointer = (GameObject)Instantiate(buildLocation, transform.TransformPoint(Input.mousePosition.x,Input.mousePosition.y, 0), Quaternion.identity);
-            Uninsta
-        }
+        //RectTransform objectRectTransform = gameObject.GetComponent<RectTransform>();                // This section gets the RectTransform information from this object. Height and width are stored in variables. The borders of the object are also defined
+        //float width = objectRectTransform.rect.width;
+        //float height = objectRectTransform.rect.height;
+        //float rightOuterBorder = (width * .5f);
+        //float leftOuterBorder = (width * -.5f);
+        //float topOuterBorder = (height * .5f);
+        //float bottomOuterBorder = (height * -.5f);
+        //if (Input.mousePosition.x <= (transform.position.x + rightOuterBorder) && Input.mousePosition.x >= (transform.position.x + leftOuterBorder) && Input.mousePosition.y <= (transform.position.y + topOuterBorder) && Input.mousePosition.y >= (transform.position.y + bottomOuterBorder))
+        //{
+        //    //PerformRaycast();                                // Calls the function to perform a raycast
+
+        //}
+        
     }
 	
 	// Update is called once per frame
-	void Update () {
-	
-	}
+	void Update ()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        if (mousePos != null)
+        {
+            if (lastPointer != null)
+                Destroy(lastPointer);
+            mousePos.x = mousePos.x - mousePos.x % 40 + 15;
+            mousePos.y = mousePos.y - mousePos.y % 40 + 15;
+            Vector3 ObjectPos = Camera.main.ScreenToWorldPoint(mousePos);
+            ObjectPos.z = 0;
+            lastPointer = (GameObject)Instantiate(prefab, ObjectPos, Quaternion.identity);
+        }
+    }
 }
