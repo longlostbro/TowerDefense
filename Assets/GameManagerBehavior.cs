@@ -58,8 +58,8 @@ public class GameManagerBehavior : MonoBehaviour {
                 {
                     nextWaveLabels[i].GetComponent<Animator>().SetTrigger("nextWave");
                 }
+                waveLabel.text = "WAVE: " + (wave + 1);
             }
-            waveLabel.text = "WAVE: " + (wave + 1);
         }
     }
     public int Gold
@@ -74,8 +74,8 @@ public class GameManagerBehavior : MonoBehaviour {
     // Use this for initialization
     GameObject lastPointer;
     void Start () {
-        Gold = 1000;
-        Wave = 0;
+        Gold = 100000;
+        Wave = 3;
         Health = 5;
         //float height = (float)600;
         //float width = 800;

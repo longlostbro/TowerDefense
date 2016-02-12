@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+
 [System.Serializable]
 public class Wave
 {
@@ -49,6 +51,8 @@ public class SpawnEnemy : MonoBehaviour {
             if (enemiesSpawned == waves[currentWave].maxEnemies &&
                 GameObject.FindGameObjectWithTag("Enemy") == null && !gameManager.gameOver)
             {
+                if (gameManager.Wave == waves.Length-1)
+                    gameManager.gameOver = true;
                 gameManager.Wave++;
                 gameManager.Gold = Mathf.RoundToInt(gameManager.Gold * 1.1f);
                 enemiesSpawned = 0;
@@ -58,7 +62,9 @@ public class SpawnEnemy : MonoBehaviour {
         }
         else {
             gameManager.gameOver = true;
-            GameObject gameOverText = GameObject.FindGameObjectWithTag("GameWon");
+            GameObject gameOverText = GameObject.FindGameObjectWithTag("GameOver");
+            Text gameOverLabel = gameOverText.GetComponentInParent<Text>();
+            gameOverLabel.text = "YOU WIN!";
             gameOverText.GetComponent<Animator>().SetBool("gameOver", true);
         }
     }
